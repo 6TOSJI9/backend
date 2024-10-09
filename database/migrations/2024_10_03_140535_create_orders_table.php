@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,4 +22,36 @@ return new class extends Migration {
     {
         Schema::dropIfExists('orders');
     }
+
 };
+class Orders extends Model
+{
+    use HasFactory;
+
+    protected array $fillable = [
+        'client_id',
+        'service_id',
+        'user_id',
+        'status',
+        'total_price',
+    ];
+    // Связь с клиентом: один заказ принадлежит одному клиенту
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    // Связь с услугой: один заказ связан с одной услугой
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    // Связь с пользователем: один заказ назначен одному пользователю
+    public function user()
+    {
+        return $this->belongsTo(Users::class);
+    }
+}
+
+

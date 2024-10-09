@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,3 +21,20 @@ return new class extends Migration {
         Schema::dropIfExists('services');
     }
 };
+
+class service extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+    ];
+
+    // Связь с заказами: одна услуга может быть связана с множеством заказов
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+}
